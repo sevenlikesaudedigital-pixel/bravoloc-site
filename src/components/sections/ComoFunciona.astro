@@ -1,0 +1,39 @@
+---
+const steps = [
+  { title: 'Chama no WhatsApp', desc: 'Conta o que precisa: tipo de tenda, tamanho, data e local do evento ou da obra.' },
+  { title: 'Orçamento em até 10 minutos', desc: 'Resposta rápida, direto com quem decide — sem fila de atendimento.' },
+  { title: 'Confirma e agenda', desc: 'Data de entrega e montagem combinadas com antecedência, sem deixar pra última hora.' },
+  { title: 'Entrega um dia antes, montada', desc: 'Equipe própria monta no local e acompanha até tudo estar pronto para uso.' },
+];
+---
+
+<section id="como-funciona" class="py-16 sm:py-24 bg-charcoal-950">
+  <div class="mx-auto max-w-5xl px-5 sm:px-8">
+    <div class="reveal-line max-w-2xl">
+      <p class="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-ember-400">
+        <span class="reveal-line-bar block h-0.5 w-8 bg-ember-500"></span>
+        Como funciona
+      </p>
+      <h2 class="mt-3 font-display text-3xl sm:text-4xl text-sand-50 leading-tight">
+        Do pedido à montagem, sem imprevisto
+      </h2>
+    </div>
+
+    <ol class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-4">
+      {steps.map((step, i) => (
+        <li class="reveal-rise relative" style={`animation-delay: ${i * 100}ms`}>
+          {i < steps.length - 1 && (
+            <span class="hidden lg:block absolute top-6 left-[calc(100%-8px)] w-[calc(100%-32px)] h-px bg-charcoal-700" aria-hidden="true"></span>
+          )}
+          <div class="flex items-center gap-3 lg:flex-col lg:items-start">
+            <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-ember-500 font-mono text-sm font-bold text-ember-400">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <h3 class="text-base font-bold text-sand-50 lg:mt-4">{step.title}</h3>
+          </div>
+          <p class="mt-2 text-sm text-charcoal-400 leading-relaxed lg:mt-2">{step.desc}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

@@ -1,0 +1,53 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../../assets/images/logo-bravoloc-horizontal.png';
+
+const WHATSAPP = 'https://wa.me/5585986560309?text=Ol%C3%A1!%20Quero%20um%20or%C3%A7amento%20de%20tenda%20com%20a%20BravoLoc.';
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-charcoal-950 border-t border-charcoal-800">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8 py-12 grid sm:grid-cols-3 gap-8">
+    <div>
+      <Image src={logo} alt="BravoLoc" width={888} height={436} class="h-12 w-auto" />
+      <p class="mt-4 text-sm text-charcoal-400 leading-relaxed max-w-xs">
+        Fabricação, venda e locação de tendas piramidais e estruturas para eventos e obras.
+      </p>
+      <p class="mt-2 text-sm italic text-ember-400/80">"Proteção com estilo, para qualquer ocasião."</p>
+    </div>
+
+    <div>
+      <p class="text-sm font-bold text-sand-50 mb-3">Navegação</p>
+      <ul class="space-y-2 text-sm text-charcoal-400">
+        <li><a href="#produtos" class="hover:text-ember-400 transition-colors">Produtos</a></li>
+        <li><a href="#diferenciais" class="hover:text-ember-400 transition-colors">Diferenciais</a></li>
+        <li><a href="#avaliacoes" class="hover:text-ember-400 transition-colors">Avaliações</a></li>
+        <li><a href="#orcamento" class="hover:text-ember-400 transition-colors">Orçamento</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="text-sm font-bold text-sand-50 mb-3">Contato</p>
+      <ul class="space-y-2 text-sm text-charcoal-400">
+        <li>
+          <a href={WHATSAPP} target="_blank" rel="noopener" class="hover:text-ember-400 transition-colors">
+            (85) 98656-0309 — WhatsApp
+          </a>
+        </li>
+        <li class="leading-relaxed">
+          Rua Júlio Rocha, 388 — Araturi<br />Caucaia - CE, 61655-490
+        </li>
+        <li class="leading-relaxed pt-1">
+          Seg-Sex 8h-18h · Sáb 8h-15h
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-charcoal-800">
+    <div class="mx-auto max-w-6xl px-5 sm:px-8 py-5 flex flex-col sm:flex-row gap-2 items-center justify-between text-xs text-charcoal-500">
+      <p>© {year} BravoLoc. Todos os direitos reservados.</p>
+      <p>Feito com <span class="text-ember-500">♥</span> por SevenLike Saúde Digital</p>
+    </div>
+  </div>
+</footer>

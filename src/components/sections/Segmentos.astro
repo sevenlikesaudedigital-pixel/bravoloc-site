@@ -1,0 +1,32 @@
+---
+// Fold 4, per approved copy: "Ícone + 1 linha cada, sem texto extra."
+const eventoIcon = `<path d="M24 6 L27 20 L42 24 L27 28 L24 42 L21 28 L6 24 L21 20 Z" />`;
+// Construction crane — mast, boom and hoist cable — reads unambiguously as "obra/construção",
+// unlike the earlier hard-hat attempt which was too abstract at icon size.
+const obraIcon = `<path d="M10 44 L10 6" /><path d="M10 10 L40 16" /><path d="M34 16 L34 30" /><path d="M30 30 L38 30" /><path d="M4 44 L18 44" />`;
+
+const segmentos = [
+  { icon: eventoIcon, title: 'Para Eventos', desc: 'Festas, casamentos, festa junina, corridas, eventos corporativos.' },
+  { icon: obraIcon, title: 'Para Obra e Construção Civil', desc: 'Proteção de material, canteiro de obra.' },
+];
+---
+
+<section class="py-14 sm:py-20 bg-sand-100">
+  <div class="mx-auto max-w-4xl px-5 sm:px-8">
+    <div class="grid sm:grid-cols-2 gap-4 sm:gap-6">
+      {segmentos.map((seg, i) => (
+        <div class="reveal-rise flex items-center gap-4 rounded-xl border border-charcoal-900/10 bg-sand-50 px-6 py-6" style={`animation-delay: ${i * 90}ms`}>
+          <svg
+            class="w-10 h-10 shrink-0 text-ember-600 stroke-[1.5]"
+            viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+            set:html={seg.icon}
+          />
+          <div>
+            <p class="font-bold text-charcoal-900">{seg.title}</p>
+            <p class="text-sm text-charcoal-600">{seg.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,99 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../../assets/images/logo-bravoloc-horizontal.png';
+
+const navLinks = [
+  { href: '#produtos', label: 'Produtos' },
+  { href: '#diferenciais', label: 'Diferenciais' },
+  { href: '#avaliacoes', label: 'Avaliações' },
+  { href: '#orcamento', label: 'Orçamento' },
+];
+---
+
+<header class="fixed top-0 inset-x-0 z-40 border-b border-charcoal-900/10 bg-sand-50/90 backdrop-blur-sm">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+    <div class="flex h-16 sm:h-18 items-center justify-between">
+      <a href="#top" class="flex items-center gap-2 shrink-0">
+        <Image src={logo} alt="BravoLoc" width={888} height={436} class="h-10 sm:h-12 w-auto" />
+      </a>
+
+      <nav class="hidden md:flex items-center gap-7" aria-label="Navegação principal">
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="relative text-base font-bold uppercase tracking-wide text-charcoal-700 hover:text-charcoal-900 transition-colors py-2 group"
+          >
+            {link.label}
+            <span class="absolute left-0 -bottom-0.5 h-0.5 w-0 bg-ember-500 transition-all duration-300 group-hover:w-full"></span>
+          </a>
+        ))}
+      </nav>
+
+      <div class="hidden md:block">
+        <a
+          href="#orcamento"
+          class="inline-flex items-center gap-2 rounded-md bg-ember-500 px-4 py-2.5 text-sm font-bold text-charcoal-900 hover:bg-ember-400 transition-colors"
+        >
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.87 9.87 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.03c-.24.68-1.4 1.3-1.93 1.35-.5.05-1.02.24-3.4-.7-2.88-1.14-4.72-4.06-4.86-4.25-.14-.19-1.17-1.55-1.17-2.96 0-1.4.74-2.1 1-2.38.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.42-.07.65.5.24.58.83 2 .9 2.14.07.15.12.31.02.5-.1.19-.15.3-.3.47-.15.16-.31.36-.44.48-.15.14-.3.3-.13.58.17.29.76 1.25 1.63 2.02 1.12 1 2.06 1.31 2.35 1.46.29.14.46.12.63-.07.17-.19.72-.84.92-1.13.19-.29.38-.24.64-.14.26.1 1.65.78 1.94.92.29.14.48.22.55.34.07.12.07.68-.17 1.36z"/>
+          </svg>
+          Solicitar Orçamento
+        </a>
+      </div>
+
+      <button
+        id="menu-toggle"
+        type="button"
+        class="md:hidden inline-flex items-center justify-center w-10 h-10 -mr-2 text-charcoal-800"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Abrir menu"
+      >
+        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path id="icon-open" d="M4 6h16M4 12h16M4 18h16" />
+          <path id="icon-close" class="hidden" d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="md:hidden hidden border-t border-charcoal-900/10 bg-sand-50">
+    <nav class="flex flex-col px-5 py-4 gap-1" aria-label="Navegação móvel">
+      {navLinks.map((link) => (
+        <a href={link.href} class="py-3 text-base font-semibold text-charcoal-800 border-b border-charcoal-900/5 last:border-0">
+          {link.label}
+        </a>
+      ))}
+      <a
+        href="#orcamento"
+        class="mt-4 inline-flex items-center justify-center gap-2 rounded-md bg-ember-500 px-4 py-3 text-sm font-bold text-charcoal-900"
+      >
+        Solicitar Orçamento
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('icon-open');
+  const iconClose = document.getElementById('icon-close');
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+    menu?.classList.toggle('hidden', isOpen);
+    iconOpen?.classList.toggle('hidden', !isOpen);
+    iconClose?.classList.toggle('hidden', isOpen);
+  });
+
+  menu?.querySelectorAll('a').forEach((a) => {
+    a.addEventListener('click', () => {
+      toggle?.setAttribute('aria-expanded', 'false');
+      menu.classList.add('hidden');
+      iconOpen?.classList.remove('hidden');
+      iconClose?.classList.add('hidden');
+    });
+  });
+</script>

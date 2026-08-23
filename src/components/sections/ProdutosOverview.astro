@@ -1,0 +1,62 @@
+---
+// Icon-grid product overview — fold 3, tenda-only (per approved copy: "Carrossel principal é
+// 100% tenda, sem competir com o motivo do clique no anúncio. Demais estruturas aparecem só
+// na Seção 8" — see CrossSell.astro for gradil/palco/pórtico/backdrop/mesas-cadeiras).
+// Same layout as before, icon swapped for the client's square product-shot images (real sizes:
+// 3x3, 3x6, 4x4, 5x5, 10x5 — corrected from the earlier placeholder 6x6/10x10 guess).
+import { Image } from 'astro:assets';
+import foto3x3 from '../../assets/images/tamanho-3x3.jpg';
+import foto3x6 from '../../assets/images/tamanho-3x6.jpg';
+import foto4x4 from '../../assets/images/tamanho-4x4.jpg';
+import foto5x5 from '../../assets/images/tamanho-5x5.jpg';
+import foto10x5 from '../../assets/images/tamanho-10x5.jpg';
+
+const tamanhos = [
+  { valor: '3x3', foto: foto3x3 },
+  { valor: '3x6', foto: foto3x6 },
+  { valor: '4x4', foto: foto4x4 },
+  { valor: '5x5', foto: foto5x5 },
+  { valor: '10x5', foto: foto10x5 },
+];
+---
+
+<section id="produtos" class="relative py-16 sm:py-24 bg-sand-50">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+    <div class="reveal-line max-w-2xl mx-auto text-center">
+      <h2 class="font-display text-3xl sm:text-4xl text-charcoal-900 leading-tight flex items-center justify-center gap-3 flex-wrap">
+        Tenda Piramidal
+        <span class="text-xs font-bold uppercase tracking-wide bg-ember-500 text-charcoal-900 px-2.5 py-1 rounded-full align-middle">
+          Mais Alugada
+        </span>
+      </h2>
+      <p class="reveal mt-3 text-charcoal-600" style="animation-delay: 60ms">
+        Vários tamanhos, locação ou venda — escolha o que se encaixa no seu evento ou na sua obra.
+      </p>
+    </div>
+
+    <div class="mt-10 grid grid-cols-2 sm:grid-cols-5 gap-3">
+      {tamanhos.map((tamanho, i) => (
+        <a
+          href="#orcamento"
+          class="reveal-rise group flex flex-col rounded-xl bg-sand-200/70 border border-charcoal-900/10 overflow-hidden hover:border-ember-500 hover:shadow-md transition-all duration-300"
+          style={`animation-delay: ${i * 70}ms`}
+        >
+          <Image
+            src={tamanho.foto}
+            alt={`Locação de tenda piramidal ${tamanho.valor} em Fortaleza e Caucaia — BravoLoc`}
+            widths={[220, 320]}
+            width={320}
+            sizes="(min-width: 640px) 20vw, 45vw"
+            class="w-full h-24 sm:h-28 object-cover"
+          />
+          <div class="px-3 py-3 text-center">
+            <p class="text-sm font-bold text-charcoal-900 leading-snug">Tenda {tamanho.valor}</p>
+            <span class="text-xs font-bold text-charcoal-500 group-hover:text-ember-600 transition-colors duration-300">
+              Pedir orçamento
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

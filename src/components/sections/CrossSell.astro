@@ -1,0 +1,52 @@
+---
+// Fold 8, per approved copy: short cross-sell block, positioned after the quote form so it
+// doesn't compete with the tent-focused ad-click intent earlier in the page.
+
+const gradilIcon = `<path d="M8 14 L8 38 M16 10 L16 38 M24 14 L24 38 M32 10 L32 38 M40 14 L40 38" /><path d="M6 16 L42 16 M6 32 L42 32" />`;
+const palcoIcon = `<path d="M8 32 L40 32 L36 40 L12 40 Z" /><path d="M12 32 L12 12 M36 32 L36 12" /><path d="M12 12 L36 12" stroke-dasharray="3 3" />`;
+const porticoIcon = `<path d="M10 40 L10 14 Q10 8 16 8 L32 8 Q38 8 38 14 L38 40" /><path d="M10 40 L10 44 M38 40 L38 44" />`;
+const backdropIcon = `<path d="M10 8 L38 8 L38 34 L10 34 Z" /><path d="M24 34 L24 42 M18 42 L30 42" />`;
+const mesasIcon = `<path d="M10 18 L38 18" /><path d="M14 18 L14 30 M34 18 L34 30" /><path d="M6 12 L6 30 M6 12 L10 12" /><path d="M42 12 L42 30 M42 12 L38 12" />`;
+
+const itens = [
+  { name: 'Gradil', icon: gradilIcon },
+  { name: 'Palco', icon: palcoIcon },
+  { name: 'Pórtico de Entrada', icon: porticoIcon },
+  { name: 'Backdrop', icon: backdropIcon },
+  { name: 'Mesas e Cadeiras', icon: mesasIcon },
+];
+---
+
+<section class="py-14 sm:py-20 bg-sand-100">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+    <div class="reveal-line max-w-2xl mx-auto text-center">
+      <p class="flex items-center justify-center gap-2 text-sm font-bold uppercase tracking-wider text-ember-700">
+        <span class="reveal-line-bar block h-0.5 w-8 bg-ember-500"></span>
+        Complemente seu pedido
+      </p>
+      <h2 class="mt-3 font-display text-2xl sm:text-3xl text-charcoal-900 leading-tight">
+        Vai alugar tenda para o seu evento? Complete sua estrutura
+      </h2>
+      <p class="reveal mt-2 text-sm text-charcoal-600" style="animation-delay: 60ms">
+        Gradil, palco, pórtico, backdrop e mesas/cadeiras — peça no mesmo orçamento.
+      </p>
+    </div>
+
+    <div class="reveal-rise mt-8 grid grid-cols-2 sm:grid-cols-5 gap-3" style="animation-delay: 100ms">
+      {itens.map((item) => (
+        <a
+          href="#orcamento"
+          class="group flex flex-col items-center gap-2 rounded-xl border border-charcoal-900/10 bg-sand-50 px-3 py-6 text-center hover:border-ember-500 transition-colors duration-300"
+        >
+          <svg
+            class="w-9 h-9 text-charcoal-500 stroke-[1.5] group-hover:text-ember-600 transition-colors duration-300"
+            viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+            set:html={item.icon}
+          />
+          <p class="text-xs sm:text-sm font-bold text-charcoal-800 leading-snug">{item.name}</p>
+          <span class="text-xs font-bold text-ember-700">Solicitar orçamento</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

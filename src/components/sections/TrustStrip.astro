@@ -1,0 +1,34 @@
+---
+// Trust strip, adapted from reference: icon + two-line claim, in our palette instead of blue.
+const truckIcon = `<path d="M4 32 L4 14 L26 14 L26 32" /><path d="M26 20 L34 20 L40 26 L40 32" /><circle cx="12" cy="34" r="3.5" /><circle cx="33" cy="34" r="3.5" /><path d="M4 28 L8 28" />`;
+const pinIcon = `<path d="M24 4 C15 4 8 11 8 20 C8 32 24 44 24 44 C24 44 40 32 40 20 C40 11 33 4 24 4 Z" /><circle cx="24" cy="20" r="6" />`;
+const spoolIcon = `<path d="M12 6 L36 6 M12 42 L36 42" /><path d="M14 6 C10 6 10 14 14 14 C10 14 10 22 14 22 C10 22 10 30 14 30 C10 30 10 38 14 38" /><path d="M34 6 C38 6 38 14 34 14 C38 14 38 22 34 22 C38 22 38 30 34 30 C38 30 38 38 34 38" />`;
+const cardIcon = `<rect x="5" y="12" width="38" height="26" rx="4" /><path d="M5 20 L43 20" /><circle cx="14" cy="30" r="2.5" /><circle cx="22" cy="30" r="2.5" />`;
+
+const itens = [
+  { icon: truckIcon, linha1: 'Vendas', linha2: 'Entregamos em todo o Brasil' },
+  { icon: pinIcon, linha1: 'Locação', linha2: 'Entregamos e montamos em todo o Ceará' },
+  { icon: spoolIcon, linha1: 'Fabricação', linha2: 'própria' },
+  { icon: cardIcon, linha1: 'Pagamento', linha2: 'facilitado' },
+];
+---
+
+<section class="bg-sand-50 border-y border-charcoal-900/10">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8 py-8">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-6 lg:divide-x lg:divide-charcoal-900/10">
+      {itens.map((item, i) => (
+        <div class={`reveal-rise flex items-center gap-3 ${i > 0 ? 'lg:pl-6' : ''}`} style={`animation-delay: ${i * 70}ms`}>
+          <svg
+            class="w-9 h-9 shrink-0 text-ember-600 stroke-[2.5]"
+            viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+            set:html={item.icon}
+          />
+          <p class="text-sm leading-snug">
+            <span class="block font-extrabold text-ember-700 uppercase tracking-wide">{item.linha1}</span>
+            <span class="block text-charcoal-700">{item.linha2}</span>
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

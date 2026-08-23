@@ -1,0 +1,232 @@
+@import "tailwindcss";
+
+/* Body — Archivo: grotesque with real backbone (built for editorial/data-dense use), avoids
+   the soft-geometric "SaaS default" feel of Inter while staying highly legible at small sizes. */
+@import "@fontsource/archivo/latin-400.css";
+@import "@fontsource/archivo/latin-500.css";
+@import "@fontsource/archivo/latin-600.css";
+@import "@fontsource/archivo/latin-700.css";
+
+/* Display — Archivo Black: a single ultra-heavy cut, no elegance, all weight. Matches the
+   blunt, high-contrast energy of the BravoLoc mark (orange/red, bold blocky lettering) instead
+   of smoothing it into a polite corporate face. Reserved for H1/H2 and big stat numerals. */
+@import "@fontsource/archivo-black/latin-400.css";
+
+/* Mono — Space Mono: technical readout for indexed labels/measurements (tent dimensions,
+   stats), kept distinct from the display face's proportions. */
+@import "@fontsource/space-mono/latin-400.css";
+@import "@fontsource/space-mono/latin-700.css";
+
+@theme {
+  --font-sans: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Archivo Black", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, "SF Mono", monospace;
+
+  /* Ember — brand primary, sampled from the BravoLoc mark's orange (#FF7F00) and deepened
+     one step for AA contrast when paired with white text on buttons/badges. */
+  --color-ember-50: #FFF4E8;
+  --color-ember-100: #FFE4C2;
+  --color-ember-200: #FFC888;
+  --color-ember-300: #FFA94D;
+  --color-ember-400: #FF8A1F;
+  --color-ember-500: #F97300;
+  --color-ember-600: #D65E00;
+  --color-ember-700: #AD4A00;
+  --color-ember-800: #833800;
+  --color-ember-900: #5C2700;
+
+  /* Flame — secondary accent, sampled from the mark's red (#E00000). Used sparingly (badges,
+     rare emphasis) — never as a second competing "primary", so the palette stays restrained. */
+  --color-flame-50: #FDEDEC;
+  --color-flame-500: #E23B32;
+  --color-flame-600: #C42B23;
+  --color-flame-700: #9E211B;
+
+  /* Charcoal — grounding neutral, warm-tinted black instead of cool slate. Carries the
+     "serious enough for a construction-site buyer" weight that pure orange can't on its own. */
+  --color-charcoal-50: #F5F4F2;
+  --color-charcoal-100: #E8E6E2;
+  --color-charcoal-200: #D2CFC8;
+  --color-charcoal-300: #B0ABA0;
+  --color-charcoal-400: #857E72;
+  --color-charcoal-500: #635C52;
+  --color-charcoal-600: #4A443C;
+  --color-charcoal-700: #37322C;
+  --color-charcoal-800: #221F1B;
+  --color-charcoal-900: #15130F;
+  --color-charcoal-950: #0C0B08;
+
+  /* Sand — warm off-white neutral (nods to Ceará's coast/sun instead of a cool corporate gray). */
+  --color-sand-50: #FBF9F6;
+  --color-sand-100: #F5F1EA;
+  --color-sand-200: #EAE2D4;
+
+  --animate-fade-up: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-fade-in: fade-in 0.6s ease-out forwards;
+  --animate-mask-up: mask-up 0.9s cubic-bezier(0.65, 0, 0.08, 1) forwards;
+  --animate-line-draw: line-draw 0.8s cubic-bezier(0.65, 0, 0.08, 1) forwards;
+  --animate-rise-in: rise-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-count-pop: count-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes mask-up {
+    from { clip-path: inset(0 0 100% 0); }
+    to { clip-path: inset(0 0 0% 0); }
+  }
+
+  @keyframes line-draw {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  @keyframes rise-in {
+    from { opacity: 0; transform: translateY(22px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes count-pop {
+    from { transform: scale(0.9); }
+    to { transform: scale(1); }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-sand-50);
+    color: var(--color-charcoal-800);
+    font-family: var(--font-sans);
+  }
+
+  ::selection {
+    background-color: var(--color-ember-200);
+    color: var(--color-charcoal-900);
+  }
+
+  /* Deliberate on-brand focus ring instead of the browser default (inconsistent across
+     browsers, and a plain blue ring would clash with orange/charcoal). Form fields keep
+     their own ring+border treatment and are intentionally excluded here. */
+  a:focus-visible,
+  button:focus-visible,
+  [role="tab"]:focus-visible,
+  summary:focus-visible {
+    outline: 2px solid var(--color-ember-500);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+@layer utilities {
+  .reveal {
+    opacity: 0;
+  }
+
+  .reveal.is-visible {
+    animation: var(--animate-fade-up);
+  }
+
+  /*
+   * Heading wipe-reveal: clip-path unmasks the text bottom-up instead of a plain fade+slide.
+   * The clip-path lives on an INNER span, never on the observed .reveal-mask element itself —
+   * Chromium's IntersectionObserver folds a self-clip-path into the target's intersection
+   * ratio (collapses to 0, never crosses a threshold), so the outer marker stays un-clipped.
+   */
+  .reveal-mask-clip {
+    display: block;
+    clip-path: inset(0 0 100% 0);
+  }
+
+  .reveal-mask.is-visible .reveal-mask-clip {
+    animation: var(--animate-mask-up);
+  }
+
+  /*
+   * Thin diagonal rule that draws in — a nod to a tent guy-line pulling taut, not a plain
+   * horizontal underline. Same self-clipping pitfall as reveal-mask: the scale lives on an
+   * inner .reveal-line-bar, the observed .reveal-line wrapper stays untransformed.
+   */
+  .reveal-line-bar {
+    display: block;
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  .reveal-line.is-visible .reveal-line-bar {
+    animation: var(--animate-line-draw);
+  }
+
+  /* Cards/list items settling into place with a touch of scale, not just fade */
+  .reveal-rise {
+    opacity: 0;
+  }
+
+  .reveal-rise.is-visible {
+    animation: var(--animate-rise-in);
+  }
+
+  /* Diagonal shade-sweep on hover — light crossing under a canopy — replaces a generic
+     shadow-lift. Implemented as a skewed gradient layer that slides across on hover. */
+  .shade-sweep {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .shade-sweep::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg, transparent 40%, color-mix(in oklab, var(--color-ember-300) 35%, transparent) 50%, transparent 60%);
+    transform: translateX(-120%);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+
+  .shade-sweep:hover::after,
+  .shade-sweep:focus-within::after {
+    transform: translateX(120%);
+  }
+
+  /* Subtle pyramid-grid texture (small triangles) instead of a generic dot-grid — echoes the
+     tent silhouette without illustrating an actual tent. */
+  .bg-canopy {
+    background-image:
+      linear-gradient(135deg, currentColor 1px, transparent 1px),
+      linear-gradient(-135deg, currentColor 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal,
+    .reveal-rise {
+      opacity: 1;
+      animation: none !important;
+      transform: none !important;
+    }
+    .reveal-mask-clip {
+      clip-path: none !important;
+      animation: none !important;
+    }
+    .reveal-line-bar {
+      transform: none !important;
+      animation: none !important;
+    }
+    .shade-sweep::after {
+      display: none;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}

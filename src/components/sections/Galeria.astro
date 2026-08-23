@@ -1,0 +1,178 @@
+---
+// Fold 6b: dynamic photo carousel — real installs from the "Tendas Selecionadas" folder,
+// auto-advancing with manual controls, not a static grid.
+import { Image } from 'astro:assets';
+import f01 from '../../assets/images/galeria-01.jpg';
+import f02 from '../../assets/images/galeria-02-duna.jpg';
+import f03 from '../../assets/images/galeria-03.jpg';
+import f04 from '../../assets/images/galeria-04.png';
+import f05 from '../../assets/images/galeria-05.jpg';
+import f06 from '../../assets/images/galeria-06.jpg';
+import f07 from '../../assets/images/galeria-07.jpg';
+import f08 from '../../assets/images/galeria-08.jpg';
+import f09 from '../../assets/images/galeria-09.jpg';
+import f10 from '../../assets/images/galeria-10.jpg';
+import f11 from '../../assets/images/galeria-11.jpg';
+import f12 from '../../assets/images/galeria-12.jpg';
+import f13 from '../../assets/images/galeria-13.jpg';
+import f14 from '../../assets/images/galeria-14.jpg';
+import f15 from '../../assets/images/galeria-15-obra.png';
+import f16 from '../../assets/images/galeria-16.jpg';
+
+// Real confirmed catalog sizes (verified against the client's actual product-shot filenames:
+// 3x3, 3x6, 4x4, 5x5, 10x5). Cycled as a caption under each photo — labeled as sizes available,
+// not a per-photo size claim, since these are candid installation shots, not measured product
+// photography, so I can't verify the exact dimension shown in any single frame.
+const tamanhos = ['3x3', '3x6', '4x4', '5x5', '10x5'];
+
+const fotos = [
+  { src: f02, alt: 'Aluguel de tenda para evento em duna, com lagoa e mar ao fundo' },
+  { src: f16, alt: 'Tenda piramidal montada com pessoas ao redor' },
+  { src: f07, alt: 'Tenda azul montada em pátio de pedra' },
+  { src: f13, alt: 'Duas tendas piramidais montadas em gramado' },
+  { src: f14, alt: 'Locação de tenda para evento em Fortaleza' },
+  { src: f15, alt: 'Locação de tenda para obra e construção civil' },
+  { src: f08, alt: 'Tenda branca montada em área gramada perto de piscina' },
+  { src: f12, alt: 'Fileira de tendas em passarela à beira-mar' },
+  { src: f05, alt: 'Estrutura tubular de tenda montada' },
+  { src: f11, alt: 'Fileira de tendas na praia' },
+  { src: f09, alt: 'Tenda para evento com equipamento de som' },
+  { src: f01, alt: 'Tenda piramidal montada na areia à beira-mar' },
+  { src: f03, alt: 'Tenda montada em ambiente comercial' },
+  { src: f04, alt: 'Tenda para obra montada em canteiro de construção' },
+  { src: f06, alt: 'Tenda piramidal montada em evento' },
+  { src: f10, alt: 'Fileira de tendas montadas' },
+].map((foto, i) => ({ ...foto, tamanho: tamanhos[i % tamanhos.length] }));
+---
+
+<section id="galeria" class="py-16 sm:py-24 bg-sand-50 overflow-hidden">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+    <div class="reveal-line max-w-2xl">
+      <h2 class="font-display text-3xl sm:text-4xl text-charcoal-900 leading-tight">
+        Nossas Soluções
+      </h2>
+      <p class="reveal mt-2 text-charcoal-600" style="animation-delay: 60ms">
+        Escolha a que melhor se encaixa com seu projeto.
+      </p>
+    </div>
+  </div>
+
+  <div class="reveal-rise relative mt-10" style="animation-delay: 100ms">
+    <div
+      id="galeria-track"
+      class="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth px-5 sm:px-8 pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+    >
+      {fotos.map((foto) => (
+        <div class="snap-center shrink-0 w-[78%] sm:w-[42%] lg:w-[28%] rounded-lg overflow-hidden border border-charcoal-900/10 bg-sand-100">
+          <Image
+            src={foto.src}
+            alt={foto.alt}
+            widths={[400, 640]}
+            width={640}
+            sizes="(min-width: 1024px) 26vw, 70vw"
+            class="w-full h-56 sm:h-64 object-cover"
+          />
+          <p class="px-3 py-2 text-sm font-bold text-charcoal-800">
+            Tenda Piramidal {foto.tamanho} <span class="font-normal text-charcoal-500">— locação e venda</span>
+          </p>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-5 flex items-center justify-center gap-4">
+      <button
+        id="galeria-prev"
+        type="button"
+        aria-label="Foto anterior"
+        class="flex h-10 w-10 items-center justify-center rounded-full border-2 border-charcoal-900 text-charcoal-900 hover:bg-charcoal-900 hover:text-sand-50 transition-colors"
+      >
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6" />
+        </svg>
+      </button>
+      <button
+        id="galeria-play"
+        type="button"
+        aria-label="Pausar apresentação automática"
+        aria-pressed="true"
+        class="flex h-10 w-10 items-center justify-center rounded-full text-ember-600 hover:bg-sand-200 transition-colors"
+      >
+        <svg id="galeria-play-icon" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <rect x="6" y="5" width="4" height="14" />
+          <rect x="14" y="5" width="4" height="14" />
+        </svg>
+      </button>
+      <button
+        id="galeria-next"
+        type="button"
+        aria-label="Próxima foto"
+        class="flex h-10 w-10 items-center justify-center rounded-full border-2 border-charcoal-900 text-charcoal-900 hover:bg-charcoal-900 hover:text-sand-50 transition-colors"
+      >
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M9 18l6-6-6-6" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  const track = document.getElementById('galeria-track');
+  const prevBtn = document.getElementById('galeria-prev');
+  const nextBtn = document.getElementById('galeria-next');
+  const playBtn = document.getElementById('galeria-play');
+  const playIcon = document.getElementById('galeria-play-icon');
+
+  if (track) {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const scrollByCard = (dir: number) => {
+      const card = track.querySelector('div');
+      const gap = 16;
+      const amount = ((card?.clientWidth ?? 300) + gap) * dir;
+      track.scrollBy({ left: amount, behavior: 'smooth' });
+    };
+
+    prevBtn?.addEventListener('click', () => scrollByCard(-1));
+    nextBtn?.addEventListener('click', () => scrollByCard(1));
+
+    let playing = !reduceMotion;
+    let timer: ReturnType<typeof setInterval> | null = null;
+
+    const iconPause = '<rect x="6" y="5" width="4" height="14" /><rect x="14" y="5" width="4" height="14" />';
+    const iconPlay = '<path d="M8 5v14l11-7z" />';
+
+    const tick = () => {
+      const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+      if (atEnd) {
+        track.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        scrollByCard(1);
+      }
+    };
+
+    const start = () => {
+      if (timer) return;
+      timer = setInterval(tick, 3500);
+    };
+    const stop = () => {
+      if (timer) clearInterval(timer);
+      timer = null;
+    };
+
+    if (playing) start();
+
+    playBtn?.addEventListener('click', () => {
+      playing = !playing;
+      playBtn.setAttribute('aria-pressed', String(playing));
+      playBtn.setAttribute('aria-label', playing ? 'Pausar apresentação automática' : 'Retomar apresentação automática');
+      if (playIcon) playIcon.innerHTML = playing ? iconPause : iconPlay;
+      if (playing) start();
+      else stop();
+    });
+
+    // Pause the auto-advance while the visitor is actively browsing manually.
+    track.addEventListener('pointerdown', stop);
+    track.addEventListener('mouseenter', stop);
+    track.addEventListener('mouseleave', () => { if (playing) start(); });
+  }
+</script>

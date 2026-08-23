@@ -1,0 +1,52 @@
+---
+const ADDRESS = 'Rua Júlio Rocha, 388 - Araturi, Caucaia - CE, 61655-490';
+const MAPS_EMBED = `https://www.google.com/maps?q=${encodeURIComponent(ADDRESS)}&output=embed`;
+const MAPS_LINK = 'https://share.google/A8V2hZY1sKLtMXcMK';
+---
+
+<section id="localizacao" class="py-16 sm:py-24 bg-sand-50">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8 grid lg:grid-cols-[0.9fr_1.1fr] gap-10 items-center">
+    <div>
+      <div class="reveal-line">
+        <p class="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-ember-700">
+          <span class="reveal-line-bar block h-0.5 w-8 bg-ember-500"></span>
+          Onde estamos
+        </p>
+        <h2 class="mt-3 font-display text-3xl sm:text-4xl text-charcoal-900 leading-tight">
+          Base em Caucaia, atendendo o Ceará inteiro
+        </h2>
+      </div>
+
+      <p class="reveal mt-4 text-charcoal-600 leading-relaxed" style="animation-delay: 80ms">
+        A locação cobre um raio de até 250km a partir da nossa sede — na prática, todo o estado.
+        Para venda, entregamos por transportadora em qualquer lugar do Brasil.
+      </p>
+
+      <address class="reveal mt-6 not-italic text-charcoal-800 leading-relaxed" style="animation-delay: 120ms">
+        Rua Júlio Rocha, 388 — Araturi<br />
+        Caucaia - CE, 61655-490
+      </address>
+
+      <a
+        href={MAPS_LINK}
+        target="_blank"
+        rel="noopener"
+        class="reveal mt-6 inline-flex items-center gap-2 text-sm font-bold text-ember-700 hover:text-ember-800"
+        style="animation-delay: 160ms"
+      >
+        Abrir no Google Maps →
+      </a>
+    </div>
+
+    <div class="reveal-rise rounded-2xl overflow-hidden border border-charcoal-900/10" style="animation-delay: 100ms">
+      <iframe
+        src={MAPS_EMBED}
+        class="w-full h-[320px] sm:h-[400px]"
+        style="border:0"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Localização da BravoLoc em Caucaia, CE"
+      ></iframe>
+    </div>
+  </div>
+</section>

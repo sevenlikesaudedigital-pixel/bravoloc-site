@@ -1,0 +1,103 @@
+---
+import { getImage } from 'astro:assets';
+import heroImg from '../../assets/images/hero-tenda-piramidal.jpg';
+
+const poster = await getImage({ src: heroImg, width: 1400, quality: 70, format: 'jpg' });
+
+---
+
+<section id="top" class="relative overflow-hidden bg-charcoal-950 min-h-[100svh] lg:min-h-[92vh] flex flex-col">
+  <!-- Full-bleed video, diagonally cut like a tent flap pulled taut — not a rounded card. -->
+  <div
+    class="absolute inset-0 lg:inset-y-0 lg:right-0 lg:left-[38%]"
+    style="clip-path: polygon(0 0, 100% 0, 100% 100%, 12% 100%);"
+  >
+    <video
+      class="w-full h-full object-cover"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      poster={poster.src}
+    >
+      <source src="/videos/hero-bravoloc.mp4" type="video/mp4" />
+    </video>
+    <div class="absolute inset-0 bg-gradient-to-r from-charcoal-950 via-charcoal-950/55 to-charcoal-950/10 lg:from-charcoal-950/95 lg:via-charcoal-950/10 lg:to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-charcoal-950/70 via-transparent to-charcoal-950/80 lg:hidden"></div>
+  </div>
+
+  <div class="relative z-10 flex-1 flex flex-col justify-center mx-auto max-w-6xl w-full px-5 sm:px-8 pt-28 pb-20 lg:pt-24">
+    <div class="max-w-xl">
+      <p class="reveal flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-ember-400 mb-5">
+        <span class="text-base leading-none">▲</span> Fabricação própria · Ceará
+      </p>
+
+      <h1 class="reveal-mask">
+        <span class="reveal-mask-clip font-display text-[2.6rem] leading-[0.98] sm:text-7xl lg:text-[3.8rem] text-sand-50 block">
+          Tenda Piramidal Direto da Fábrica.{' '}
+          <span class="text-ember-500">Até 24% mais barato.</span>
+        </span>
+      </h1>
+
+      <p class="reveal mt-6 text-lg text-charcoal-200 max-w-md" style="animation-delay: 120ms">
+        Locação de tenda em Fortaleza, Caucaia e região metropolitana, venda para o Brasil todo —
+        tendas piramidais fabricadas internamente para eventos, construção civil e obras, com
+        segurança e resistência.
+      </p>
+
+      <div class="reveal mt-8 flex flex-col sm:flex-row gap-3" style="animation-delay: 200ms">
+        <a
+          href="#orcamento"
+          class="shade-sweep inline-flex items-center justify-center gap-2 rounded-md bg-ember-500 px-6 py-3.5 text-base font-bold text-charcoal-900 hover:bg-ember-400 transition-colors"
+        >
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.87 9.87 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.03c-.24.68-1.4 1.3-1.93 1.35-.5.05-1.02.24-3.4-.7-2.88-1.14-4.72-4.06-4.86-4.25-.14-.19-1.17-1.55-1.17-2.96 0-1.4.74-2.1 1-2.38.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.42-.07.65.5.24.58.83 2 .9 2.14.07.15.12.31.02.5-.1.19-.15.3-.3.47-.15.16-.31.36-.44.48-.15.14-.3.3-.13.58.17.29.76 1.25 1.63 2.02 1.12 1 2.06 1.31 2.35 1.46.29.14.46.12.63-.07.17-.19.72-.84.92-1.13.19-.29.38-.24.64-.14.26.1 1.65.78 1.94.92.29.14.48.22.55.34.07.12.07.68-.17 1.36z"/>
+          </svg>
+          Quero Meu Orçamento
+        </a>
+        <a
+          href="#produtos"
+          class="inline-flex items-center justify-center gap-2 rounded-md border-2 border-charcoal-600 px-6 py-3.5 text-base font-bold text-sand-50 hover:border-ember-500 hover:text-ember-400 transition-colors"
+        >
+          Ver Tamanhos de Tenda
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Real proof points, sized to actually compete for attention against the headline above —
+       not a muted footnote bar. Client count is the real 2026 order volume from the owner's
+       own tracking app (655 concluídos, rounded down to +600 to stay defensible). -->
+  <div class="reveal relative z-10 border-t border-charcoal-800/80 bg-charcoal-950/85 backdrop-blur-sm" style="animation-delay: 280ms">
+    <div class="mx-auto max-w-6xl px-5 sm:px-8 py-6 grid grid-cols-3 gap-4 sm:gap-8">
+      <div>
+        <p class="font-mono text-3xl sm:text-4xl font-extrabold text-ember-400 leading-none">
+          <span data-counter-target="600" data-counter-prefix="+">0</span>
+        </p>
+        <p class="mt-1.5 text-xs sm:text-sm font-semibold text-sand-200 leading-snug">clientes atendidos</p>
+      </div>
+      <div class="pl-4 sm:pl-8 border-l border-charcoal-700">
+        <p class="font-mono text-3xl sm:text-4xl font-extrabold text-ember-400 leading-none">
+          <span data-counter-target="10" data-counter-prefix="+">0</span>
+        </p>
+        <p class="mt-1.5 text-xs sm:text-sm font-semibold text-sand-200 leading-snug">anos de experiência</p>
+      </div>
+      <div class="pl-4 sm:pl-8 border-l border-charcoal-700">
+        <p class="font-display text-xl sm:text-2xl text-ember-400 leading-none">Pronta<br class="sm:hidden" /> entrega</p>
+        <p class="mt-1.5 text-xs sm:text-sm font-semibold text-sand-200 leading-snug">sem esperar fabricação</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Torn-canopy skyline: the section's actual boundary is a row of tent silhouettes, not a straight line. -->
+  <svg
+    class="absolute -bottom-px left-0 w-full h-[52px] sm:h-[72px] text-sand-50"
+    viewBox="0 0 1440 120"
+    preserveAspectRatio="none"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path d="M0,120 L120,22 L240,120 L360,48 L480,120 L620,12 L760,120 L900,58 L1040,120 L1180,30 L1320,120 L1440,72 L1440,120 L0,120 Z" />
+  </svg>
+</section>

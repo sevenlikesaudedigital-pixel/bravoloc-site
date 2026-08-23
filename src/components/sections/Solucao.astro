@@ -1,0 +1,52 @@
+---
+import { Image } from 'astro:assets';
+import truss from '../../assets/images/tenda-truss-armacao.jpg';
+
+const points = [
+  'Fabricação própria — sem terceirizar solda, galvanização ou transporte como boa parte do mercado',
+  'Resposta em até 10 minutos no WhatsApp, direto com quem decide',
+  'Entrega um dia antes do evento ou da obra, nunca em cima da hora',
+  'Equipe acompanha a montagem no local, não larga o material e vai embora',
+];
+---
+
+<section class="py-16 sm:py-24 bg-sand-50">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+    <div class="reveal-rise order-2 lg:order-1 rounded-2xl overflow-hidden border border-charcoal-900/10">
+      <Image
+        src={truss}
+        alt="Estrutura tubular de tenda BravoLoc montada, mostrando a armação de metal"
+        widths={[400, 700]}
+        width={700}
+        sizes="(min-width: 1024px) 42vw, 92vw"
+        class="w-full h-[320px] sm:h-[400px] object-cover"
+      />
+    </div>
+
+    <div class="order-1 lg:order-2">
+      <div class="reveal-line">
+        <p class="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-ember-700">
+          <span class="reveal-line-bar block h-0.5 w-8 bg-ember-500"></span>
+          A solução
+        </p>
+        <h2 class="mt-3 font-display text-3xl sm:text-4xl text-charcoal-900 leading-tight">
+          Quem fabrica controla o prazo. Quem terceiriza, promete.
+        </h2>
+      </div>
+
+      <p class="reveal mt-4 text-charcoal-600 leading-relaxed" style="animation-delay: 80ms">
+        A BravoLoc produz suas próprias estruturas do início ao fim — sem depender de terceiros
+        para soldar, galvanizar ou entregar. É por isso que o prazo combinado é o prazo cumprido.
+      </p>
+
+      <ul class="mt-6 space-y-3">
+        {points.map((point, i) => (
+          <li class="reveal flex items-start gap-3" style={`animation-delay: ${120 + i * 70}ms`}>
+            <span class="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-ember-100 text-ember-700 text-xs font-bold">✓</span>
+            <span class="text-charcoal-700 leading-snug">{point}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

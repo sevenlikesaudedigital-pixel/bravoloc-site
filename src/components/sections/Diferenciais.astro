@@ -1,0 +1,76 @@
+---
+// Replaces the old market-comparison table. Technical specs translated into reader-facing
+// benefits (not a spec sheet) — the real spec sits as a small muted caption under each benefit,
+// for credibility without leading with jargon. Video shows the actual ferragem/lona up close.
+const beneficios = [
+  { titulo: 'Não enferruja', spec: 'Aço galvanizado, tratamento anticorrosivo' },
+  { titulo: 'Aguenta vento forte', spec: 'Tubos e estrutura reforçados' },
+  { titulo: 'Chuva não passa', spec: 'Lona PVC 100% impermeável' },
+  { titulo: 'Não desbota no sol', spec: 'Proteção UV na lona' },
+  { titulo: 'Não rasga fácil', spec: 'Soldagem eletrônica de alta frequência' },
+  { titulo: 'Vida longa, manutenção baixa', spec: 'Tratamento anti-mofo, alta durabilidade' },
+];
+---
+
+<section id="diferenciais" class="py-16 sm:py-24 bg-charcoal-950">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+    <div class="reveal-line max-w-2xl">
+      <p class="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-ember-400">
+        <span class="reveal-line-bar block h-0.5 w-8 bg-ember-500"></span>
+        Por dentro da estrutura
+      </p>
+      <h2 class="mt-3 font-display text-3xl sm:text-4xl text-sand-50 leading-tight">
+        Nosso diferencial está no preço e na qualidade do material.
+      </h2>
+      <p class="reveal mt-4 text-charcoal-300 leading-relaxed italic" style="animation-delay: 80ms">
+        O que você não vê é o que aguenta tudo.
+      </p>
+    </div>
+
+    <div class="reveal-rise relative mt-10 h-48 sm:h-64 lg:h-80 rounded-2xl overflow-hidden border border-charcoal-800" style="animation-delay: 100ms">
+      {['/videos/flow-solda.mp4', '/videos/flow-ferro.mp4', '/videos/flow-lona.mp4'].map((src, i) => (
+        <video
+          data-estrutura-clip={i}
+          class:list={["absolute inset-0 w-full h-full object-cover transition-opacity duration-700", i === 0 ? "opacity-100" : "opacity-0"]}
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+        >
+          <source src={src} type="video/mp4" />
+        </video>
+      ))}
+    </div>
+
+    <ul class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6">
+      {beneficios.map((b, i) => (
+        <li class="reveal-rise flex items-start gap-3" style={`animation-delay: ${140 + i * 70}ms`}>
+          <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-ember-500 text-charcoal-900 text-xs font-bold">✓</span>
+          <p>
+            <span class="block font-bold text-sand-50 leading-snug">{b.titulo}</span>
+            <span class="block text-xs text-charcoal-400 mt-0.5">{b.spec}</span>
+          </p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<script>
+  // Three videos are stacked and all looping on their own (autoplay attribute, present from
+  // page load — the one autoplay path every browser reliably honors). Cycling which one is
+  // visible is a pure CSS opacity swap, not a script-driven .play() call — a dynamically
+  // triggered play() after the initial load is what mobile browsers tend to block, which is
+  // exactly what left the video blank on a real device with the earlier single-element version.
+  const clips = document.querySelectorAll<HTMLVideoElement>('[data-estrutura-clip]');
+  if (clips.length > 1) {
+    let current = 0;
+    setInterval(() => {
+      const next = (current + 1) % clips.length;
+      clips[current].classList.replace('opacity-100', 'opacity-0');
+      clips[next].classList.replace('opacity-0', 'opacity-100');
+      current = next;
+    }, 5000);
+  }
+</script>

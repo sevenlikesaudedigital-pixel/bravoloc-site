@@ -1,0 +1,53 @@
+---
+import { Image } from 'astro:assets';
+import equipe from '../../assets/images/equipe-bravoloc.jpg';
+---
+
+<section class="py-16 sm:py-24 bg-sand-100">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+    <div class="reveal-rise rounded-2xl overflow-hidden border border-charcoal-900/10">
+      <Image
+        src={equipe}
+        alt="André, fundador da BravoLoc, ao lado da esposa em frente ao painel da marca"
+        widths={[400, 700]}
+        width={700}
+        sizes="(min-width: 1024px) 42vw, 92vw"
+        class="w-full h-[300px] sm:h-[380px] object-cover"
+      />
+    </div>
+
+    <div>
+      <div class="reveal-line">
+        <p class="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-ember-700">
+          <span class="reveal-line-bar block h-0.5 w-8 bg-ember-500"></span>
+          Quem monta
+        </p>
+        <h2 class="mt-3 font-display text-3xl sm:text-4xl text-charcoal-900 leading-tight">
+          Mais de 10 anos no ramo, antes mesmo da BravoLoc existir
+        </h2>
+      </div>
+
+      <p class="reveal mt-4 text-charcoal-700 leading-relaxed" style="animation-delay: 80ms">
+        André, fundador da BravoLoc, começou no comercial de uma fábrica de toldos e foi crescendo
+        junto com o setor de locação de estruturas até abrir sua própria empresa em Caucaia (CE).
+        A BravoLoc tem 3 anos de história própria — mas carrega mais de uma década de experiência
+        de quem está à frente dela.
+      </p>
+
+      <div class="reveal mt-8 grid grid-cols-2 gap-6 max-w-sm" style="animation-delay: 140ms">
+        <div>
+          <p class="font-mono text-3xl font-bold text-ember-600">
+            <span data-counter-target="600" data-counter-prefix="+">0</span>
+          </p>
+          <p class="mt-1 text-sm text-charcoal-500 leading-snug">pedidos concluídos em 2026</p>
+        </div>
+        <div>
+          <p class="font-mono text-3xl font-bold text-ember-600">
+            <span data-counter-target="250" data-counter-prefix="até ">0</span><span class="text-lg">km</span>
+          </p>
+          <p class="mt-1 text-sm text-charcoal-500 leading-snug">de raio de locação a partir de Caucaia</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
