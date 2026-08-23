@@ -92,8 +92,34 @@ const structuredData = {
     <meta name="twitter:image" content={ogImageURL} />
 
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-WTKBQTWX');
+    </script>
+    <!-- End Google Tag Manager -->
   </head>
   <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+      <iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-WTKBQTWX"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"
+      ></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
     <slot />
 
     <script>
@@ -192,9 +218,9 @@ const structuredData = {
     </script>
 
     <script>
-      // dataLayer events for WhatsApp/tel clicks — no GTM container wired up yet (BravoLoc
-      // doesn't have one), but every conversion click is already tagged so hooking up
-      // Google Ads/GA4 later is a config change, not a code change.
+      // dataLayer events for WhatsApp/tel clicks — GTM-WTKBQTWX is wired up above, so these
+      // pushes are already visible to it. Hooking up Google Ads/GA4 conversions on top of
+      // these events is a GTM config change (tags/triggers), not a code change.
       declare global {
         interface Window {
           dataLayer: any[];

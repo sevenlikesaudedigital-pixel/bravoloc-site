@@ -90,6 +90,17 @@ const WHATSAPP_NUMBER = '5585986560309';
     const message = encodeURIComponent(
       `Olá! Meu nome é ${nome} e quero um orçamento na BravoLoc. Meu WhatsApp: ${whatsapp}. Meu e-mail: ${email}`
     );
+
+    // This form opens wa.me via window.open() rather than a real <a> click, so it's invisible
+    // to Layout.astro's generic link-click listener — push its own event so it's not a blind
+    // spot for GTM/GA4/Ads conversion tracking.
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'generate_lead',
+      form_id: 'quote-form',
+      form_location: 'orcamento',
+    });
+
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank', 'noopener');
   });
 </script>

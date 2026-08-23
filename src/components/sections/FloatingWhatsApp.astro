@@ -121,6 +121,16 @@ const WHATSAPP_NUMBER = '5585986560309';
     const message = encodeURIComponent(
       `Olá! Meu nome é ${nome} e quero um orçamento na BravoLoc. Meu WhatsApp: ${whatsapp}. Meu e-mail: ${email}`
     );
+
+    // Same as QuoteForm.astro: window.open() bypasses the generic <a> click listener in
+    // Layout.astro, so this conversion needs its own dataLayer push to be visible to GTM.
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'generate_lead',
+      form_id: 'fab-whatsapp-form',
+      form_location: 'floating_whatsapp',
+    });
+
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank', 'noopener');
     closeModal();
     form.reset();
