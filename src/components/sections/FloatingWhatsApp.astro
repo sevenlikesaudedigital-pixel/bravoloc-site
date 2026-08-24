@@ -51,15 +51,9 @@ const WHATSAPP_NUMBER = '5585986560309';
           class="w-full rounded-md border border-charcoal-300 bg-sand-50 px-4 py-2.5 text-charcoal-900 placeholder:text-charcoal-400 focus:border-ember-500 focus:outline-none focus:ring-2 focus:ring-ember-500/30"
           placeholder="(85) 99999-9999" />
       </div>
-      <div>
-        <label for="fab-email" class="block text-sm font-semibold text-charcoal-800 mb-1.5">E-mail</label>
-        <input id="fab-email" name="email" type="email" required
-          class="w-full rounded-md border border-charcoal-300 bg-sand-50 px-4 py-2.5 text-charcoal-900 placeholder:text-charcoal-400 focus:border-ember-500 focus:outline-none focus:ring-2 focus:ring-ember-500/30"
-          placeholder="seuemail@exemplo.com" />
-      </div>
 
       <p id="fab-whatsapp-error" class="hidden text-sm text-flame-600" role="alert">
-        Preenche nome, WhatsApp e e-mail pra continuar.
+        Preenche nome e WhatsApp pra continuar.
       </p>
 
       <button
@@ -110,16 +104,15 @@ const WHATSAPP_NUMBER = '5585986560309';
     const data = new FormData(form);
     const nome = (data.get('nome') || '').toString().trim();
     const whatsapp = (data.get('whatsapp') || '').toString().trim();
-    const email = (data.get('email') || '').toString().trim();
 
-    if (!nome || !whatsapp || !email) {
+    if (!nome || !whatsapp) {
       errorEl?.classList.remove('hidden');
       return;
     }
     errorEl?.classList.add('hidden');
 
     const message = encodeURIComponent(
-      `Olá! Meu nome é ${nome} e quero um orçamento na BravoLoc. Meu WhatsApp: ${whatsapp}. Meu e-mail: ${email}`
+      `Olá! Meu nome é ${nome} e quero um orçamento na BravoLoc. Meu WhatsApp: ${whatsapp}`
     );
 
     // Same as QuoteForm.astro: window.open() bypasses the generic <a> click listener in
