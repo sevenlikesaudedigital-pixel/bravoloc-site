@@ -115,13 +115,15 @@ const WHATSAPP_NUMBER = '5585986560309';
       `Olá! Meu nome é ${nome} e quero um orçamento na BravoLoc. Meu WhatsApp: ${whatsapp}`
     );
 
-    // Same as QuoteForm.astro: window.open() bypasses the generic <a> click listener in
-    // Layout.astro, so this conversion needs its own dataLayer push to be visible to GTM.
+    // window.open() bypasses the generic <a> click listener in Layout.astro, so this needs
+    // its own push — but it stays under the SAME 'whatsapp_click' event as a plain wa.me link
+    // click, not 'generate_lead'. That keeps WhatsApp-channel leads (this popup + any direct
+    // wa.me link) separate from QuoteForm.astro's 'generate_lead', matching GS3's pattern of
+    // segmenting form submissions from WhatsApp clicks instead of merging them into one event.
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
-      event: 'generate_lead',
-      form_id: 'fab-whatsapp-form',
-      form_location: 'floating_whatsapp',
+      event: 'whatsapp_click',
+      link_location: 'floating_whatsapp',
     });
 
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank', 'noopener');
