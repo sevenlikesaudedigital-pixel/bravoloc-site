@@ -233,18 +233,23 @@ const structuredData = {
         if (!link) return;
         const href = link.getAttribute('href') || '';
 
+        // Fixed-position elements (like the floating WhatsApp button) live outside any
+        // <section>/<header>/<footer>, so they'd otherwise report 'unknown'. A link can opt in
+        // to an explicit location via data-tracking-location instead of relying on its ancestor.
+        const location = link.dataset.trackingLocation || link.closest('section, header, footer')?.id || 'unknown';
+
         if (href.includes('wa.me') || href.includes('api.whatsapp.com')) {
           window.dataLayer.push({
             event: 'whatsapp_click',
             link_url: href,
             link_text: link.textContent?.trim().slice(0, 100),
-            link_location: link.closest('section, header, footer')?.id || 'unknown',
+            link_location: location,
           });
         } else if (href.startsWith('tel:')) {
           window.dataLayer.push({
             event: 'phone_click',
             link_url: href,
-            link_location: link.closest('section, header, footer')?.id || 'unknown',
+            link_location: location,
           });
         }
       });
