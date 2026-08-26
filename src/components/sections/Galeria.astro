@@ -23,23 +23,26 @@ import f16 from '../../assets/images/galeria-16.jpg';
 // placeholder — each caption below is a deliberate choice. Includes 6x6 and 10x10, confirmed
 // by the client as real sizes BravoLoc makes, in addition to the 3x3/3x6/4x4/5x5/10x5 set
 // used in ProdutosOverview.astro (that section still only features the 5 most-rented sizes).
+// `caption` overrides the default "Tenda Piramidal {tamanho} — locação e venda" line with
+// custom copy for a handful of photos (dictated by the client, 26/08) — everything else keeps
+// the standard template.
 const fotos = [
-  { src: f02, alt: 'Aluguel de tenda para evento em duna, com lagoa e mar ao fundo', tamanho: '5x5' },
+  { src: f02, alt: 'Aluguel de tenda para evento em duna, com lagoa e mar ao fundo', tamanho: '5x5', caption: 'Tenda Piramidal 5x5 - aluguel de tenda em Fortaleza' },
   { src: f16, alt: 'Tenda piramidal montada com pessoas ao redor', tamanho: '6x6' },
   { src: f07, alt: 'Tenda azul montada em pátio de pedra', tamanho: '4x4' },
   { src: f13, alt: 'Duas tendas piramidais montadas em gramado', tamanho: '5x5' },
   { src: f14, alt: 'Locação de tenda para evento em Fortaleza', tamanho: '10x5' },
-  { src: f15, alt: 'Locação de tenda para obra e construção civil', tamanho: '3x3' },
+  { src: f15, alt: 'Locação de tenda para obra e construção civil, com maquinário pesado', tamanho: '3x3', caption: 'Tenda Grande - Locação e Venda' },
   { src: f08, alt: 'Tenda piramidal grande montada à beira de lago, com mesas para evento', tamanho: '10x10' },
   { src: f12, alt: 'Fileira de tendas em passarela à beira-mar', tamanho: '4x4' },
   { src: f05, alt: 'Estrutura tubular de tenda montada', tamanho: '5x5' },
-  { src: f11, alt: 'Fileira de tendas brancas montadas para feira de rua', tamanho: '5x5' },
+  { src: f11, alt: 'Fileira de tendas brancas montadas para feira de rua', tamanho: '5x5', caption: 'Tenda Piramidal 5x5 — aluguel de toldos para evento' },
   { src: f09, alt: 'Tenda montada na cobertura do restaurante Fazendinha', tamanho: '5x5' },
   { src: f01, alt: 'Tenda piramidal montada na areia à beira-mar', tamanho: '3x6' },
   { src: f03, alt: 'Tenda montada em ambiente comercial', tamanho: '4x4' },
   { src: f04, alt: 'Tenda para obra montada em canteiro de construção', tamanho: '5x5' },
   { src: f06, alt: 'Tenda azul montada em canteiro de obra', tamanho: '3x3' },
-  { src: f10, alt: 'Fileira de tendas montadas', tamanho: '3x3' },
+  { src: f10, alt: 'Tendas sendo montadas em campo de futebol gramado, com iluminação de festa', tamanho: '3x3', caption: 'Locação Tenda 3x3' },
 ];
 ---
 
@@ -71,7 +74,9 @@ const fotos = [
             class="w-full h-56 sm:h-64 object-cover"
           />
           <p class="px-3 py-2 text-sm font-bold text-charcoal-800">
-            Tenda Piramidal {foto.tamanho} <span class="font-normal text-charcoal-500">— locação e venda</span>
+            {foto.caption ?? (
+              <>Tenda Piramidal {foto.tamanho} <span class="font-normal text-charcoal-500">— locação e venda</span></>
+            )}
           </p>
         </div>
       ))}
