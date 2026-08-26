@@ -19,30 +19,28 @@ import f14 from '../../assets/images/galeria-14.jpg';
 import f15 from '../../assets/images/galeria-15-obra.png';
 import f16 from '../../assets/images/galeria-16.jpg';
 
-// Real confirmed catalog sizes (verified against the client's actual product-shot filenames:
-// 3x3, 3x6, 4x4, 5x5, 10x5). Cycled as a caption under each photo — labeled as sizes available,
-// not a per-photo size claim, since these are candid installation shots, not measured product
-// photography, so I can't verify the exact dimension shown in any single frame.
-const tamanhos = ['3x3', '3x6', '4x4', '5x5', '10x5'];
-
+// Sizes assigned per photo (dictated by the client per-image, 26/08). No longer a cycled
+// placeholder — each caption below is a deliberate choice, not derived from the confirmed
+// catalog filenames alone. Note: 6x6 and 10x10 aren't in the "confirmed catalog" list used in
+// ProdutosOverview.astro (3x3/3x6/4x4/5x5/10x5) — flagged to the client, kept as instructed.
 const fotos = [
-  { src: f02, alt: 'Aluguel de tenda para evento em duna, com lagoa e mar ao fundo' },
-  { src: f16, alt: 'Tenda piramidal montada com pessoas ao redor' },
-  { src: f07, alt: 'Tenda azul montada em pátio de pedra' },
-  { src: f13, alt: 'Duas tendas piramidais montadas em gramado' },
-  { src: f14, alt: 'Locação de tenda para evento em Fortaleza' },
-  { src: f15, alt: 'Locação de tenda para obra e construção civil' },
-  { src: f08, alt: 'Tenda branca montada em área gramada perto de piscina' },
-  { src: f12, alt: 'Fileira de tendas em passarela à beira-mar' },
-  { src: f05, alt: 'Estrutura tubular de tenda montada' },
-  { src: f11, alt: 'Fileira de tendas na praia' },
-  { src: f09, alt: 'Tenda para evento com equipamento de som' },
-  { src: f01, alt: 'Tenda piramidal montada na areia à beira-mar' },
-  { src: f03, alt: 'Tenda montada em ambiente comercial' },
-  { src: f04, alt: 'Tenda para obra montada em canteiro de construção' },
-  { src: f06, alt: 'Tenda piramidal montada em evento' },
-  { src: f10, alt: 'Fileira de tendas montadas' },
-].map((foto, i) => ({ ...foto, tamanho: tamanhos[i % tamanhos.length] }));
+  { src: f02, alt: 'Aluguel de tenda para evento em duna, com lagoa e mar ao fundo', tamanho: '5x5' },
+  { src: f16, alt: 'Tenda piramidal montada com pessoas ao redor', tamanho: '6x6' },
+  { src: f07, alt: 'Tenda azul montada em pátio de pedra', tamanho: '4x4' },
+  { src: f13, alt: 'Duas tendas piramidais montadas em gramado', tamanho: '5x5' },
+  { src: f14, alt: 'Locação de tenda para evento em Fortaleza', tamanho: '10x5' },
+  { src: f15, alt: 'Locação de tenda para obra e construção civil', tamanho: '3x3' },
+  { src: f08, alt: 'Tenda piramidal grande montada à beira de lago, com mesas para evento', tamanho: '10x10' },
+  { src: f12, alt: 'Fileira de tendas em passarela à beira-mar', tamanho: '4x4' },
+  { src: f05, alt: 'Estrutura tubular de tenda montada', tamanho: '5x5' },
+  { src: f11, alt: 'Fileira de tendas brancas montadas para feira de rua', tamanho: '5x5' },
+  { src: f09, alt: 'Tenda montada na cobertura do restaurante Fazendinha', tamanho: '5x5' },
+  { src: f01, alt: 'Tenda piramidal montada na areia à beira-mar', tamanho: '3x6' },
+  { src: f03, alt: 'Tenda montada em ambiente comercial', tamanho: '4x4' },
+  { src: f04, alt: 'Tenda para obra montada em canteiro de construção', tamanho: '5x5' },
+  { src: f06, alt: 'Tenda azul montada em canteiro de obra', tamanho: '3x3' },
+  { src: f10, alt: 'Fileira de tendas montadas', tamanho: '3x3' },
+];
 ---
 
 <section id="galeria" class="py-16 sm:py-24 bg-sand-50 overflow-hidden">
