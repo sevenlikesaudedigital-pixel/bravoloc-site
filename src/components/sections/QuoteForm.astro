@@ -101,6 +101,10 @@ const WHATSAPP_NUMBER = '5585986560309';
       form_location: 'orcamento',
     });
 
+    // Grava o lead (nome, whatsapp, palavra-chave/gclid capturados na chegada) na planilha de
+    // rastreio — ver Layout.astro. Fire-and-forget, não atrasa o redirecionamento abaixo.
+    window.sendBravoLocLead?.({ nome: nome, whatsapp: whatsapp, formulario: 'quote-form' });
+
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank', 'noopener');
   });
 </script>

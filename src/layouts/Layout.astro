@@ -11,6 +11,12 @@ interface Props {
 
 const { title, description, preloadImages } = Astro.props;
 
+// Backend de rastreio de leads (Google Apps Script, ver docs/leads-tracking.md).
+// Recebe nome/whatsapp + palavra-chave/gclid capturados do Google Ads e grava numa planilha.
+// Valores reais em .env (não versionado) — ver .env.example.
+const LEADS_ENDPOINT = import.meta.env.PUBLIC_LEADS_ENDPOINT ?? '';
+const LEADS_SECRET = import.meta.env.PUBLIC_LEADS_SECRET ?? '';
+
 const SITE_URL = 'https://www.bravoloctendas.com.br';
 const canonicalURL = new URL(Astro.url.pathname, SITE_URL);
 
@@ -253,6 +259,70 @@ const structuredData = {
           });
         }
       });
+    </script>
+
+    <script define:vars={{ LEADS_ENDPOINT, LEADS_SECRET }}>
+      // Rastreio de leads (ver docs/leads-tracking.md): captura os parâmetros que o Google Ads
+      // anexa na URL (sufixo de URL final da campanha) e guarda em sessionStorage, pra
+      // sobreviver até o visitante preencher o formulário ou clicar no WhatsApp — mesmo que
+      // isso aconteça em outra página do site, não só na de entrada.
+      (function () {
+        var params = new URLSearchParams(window.location.search);
+        var keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'matchtype', 'gclid', 'device'];
+        var hasAny = keys.some(function (k) { return params.has(k); });
+        if (!hasAny) return;
+        var data = {};
+        keys.forEach(function (k) {
+          if (params.has(k)) data[k] = params.get(k);
+        });
+        try {
+          sessionStorage.setItem('bravoloc_lead_source', JSON.stringify(data));
+        } catch (e) {
+          /* sessionStorage indisponível (modo privado, etc.) — segue sem rastreio de origem */
+        }
+      })();
+
+      // Função compartilhada usada pelo formulário de orçamento e pelo botão flutuante de
+      // WhatsApp pra mandar cada lead (nome/whatsapp quando existir, + a origem capturada
+      // acima) pro backend de planilha. Fire-and-forget: nunca atrasa nem bloqueia o
+      // redirecionamento pro WhatsApp, mesmo se o envio falhar.
+      window.sendBravoLocLead = function (extra) {
+        if (!LEADS_ENDPOINT) return;
+        var stored = {};
+        try {
+          stored = JSON.parse(sessionStorage.getItem('bravoloc_lead_source') || '{}');
+        } catch (e) {
+          /* ignora */
+        }
+        var origem = stored.utm_source
+          ? stored.utm_source + '/' + (stored.utm_medium || '')
+          : (document.referrer || 'direto');
+        var payload = Object.assign(
+          {
+            secret: LEADS_SECRET,
+            keyword: stored.utm_term || '',
+            campanha: stored.utm_campaign || '',
+            matchtype: stored.matchtype || '',
+            dispositivo: stored.device || '',
+            gclid: stored.gclid || '',
+            origem: origem,
+            pagina: window.location.href,
+          },
+          extra || {}
+        );
+        try {
+          fetch(LEADS_ENDPOINT, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify(payload),
+          }).catch(function () {
+            /* falha de rede não deve impedir o lead de seguir pro WhatsApp */
+          });
+        } catch (e) {
+          /* ignora */
+        }
+      };
     </script>
   </body>
 </html>
