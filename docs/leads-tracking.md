@@ -21,7 +21,9 @@ conversão, nunca o nome/WhatsApp de quem converteu — e não há como cruzar a
    `window.sendBravoLocLead(extra)`, usada pelos dois pontos de conversão do site.
 
 3. **`QuoteForm.astro`** (formulário "Solicitar Orçamento") e **`FloatingWhatsApp.astro`**
-   (botão flutuante) chamam `window.sendBravoLocLead(...)` no clique/submit — envio
+   (botão flutuante, que agora abre um popup pedindo nome, WhatsApp e Comprar/Alugar antes de
+   encaminhar pro WhatsApp) chamam `window.sendBravoLocLead(...)` no submit, enviando também
+   o campo `interesse` (`Comprar` ou `Alugar`) — envio
    fire-and-forget (`fetch` com `mode: 'no-cors'`) que nunca atrasa nem bloqueia o
    redirecionamento pro WhatsApp, mesmo se falhar.
 
@@ -29,7 +31,7 @@ conversão, nunca o nome/WhatsApp de quem converteu — e não há como cruzar a
    (Google Drive da conta SevenLike). Recebe o POST em `doPost(e)`, confere o campo `secret`
    contra `PUBLIC_LEADS_SECRET`, e grava uma linha com Data/Hora, Nome, WhatsApp,
    Palavra-chave, Campanha, Tipo de Correspondência, Dispositivo, GCLID, Origem, Página e
-   Formulário. Código-fonte do Apps Script: ver o próprio projeto em
+   Formulário e Interesse (coluna L, Comprar/Alugar). Código-fonte do Apps Script: ver o próprio projeto em
    script.google.com (nome "BravoLoc - Leads (Backend)"), não versionado neste repositório.
 
 ## Variáveis de ambiente

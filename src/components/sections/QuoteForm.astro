@@ -52,8 +52,22 @@ const WHATSAPP_NUMBER = '5585986560309';
             placeholder="seuemail@exemplo.com" />
         </div>
 
+        <fieldset>
+          <legend class="block text-sm font-semibold text-sand-50 mb-1.5">Você quer</legend>
+          <div class="grid grid-cols-2 gap-3">
+            <label class="cursor-pointer">
+              <input type="radio" name="interesse" value="Comprar" required class="peer sr-only" />
+              <div class="rounded-md border border-charcoal-700 bg-charcoal-900 px-4 py-3 text-center font-semibold text-sand-50 transition-colors peer-checked:border-ember-500 peer-checked:bg-ember-500 peer-checked:text-charcoal-900 peer-focus-visible:ring-2 peer-focus-visible:ring-ember-500/40">Comprar</div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="interesse" value="Alugar" class="peer sr-only" />
+              <div class="rounded-md border border-charcoal-700 bg-charcoal-900 px-4 py-3 text-center font-semibold text-sand-50 transition-colors peer-checked:border-ember-500 peer-checked:bg-ember-500 peer-checked:text-charcoal-900 peer-focus-visible:ring-2 peer-focus-visible:ring-ember-500/40">Alugar</div>
+            </label>
+          </div>
+        </fieldset>
+
         <p id="qf-error" class="hidden text-sm text-flame-500" role="alert">
-          Preenche nome, WhatsApp e e-mail pra gente conseguir te atender direito.
+          Preenche nome, WhatsApp, e-mail e se quer comprar ou alugar pra gente conseguir te atender direito.
         </p>
 
         <button
@@ -80,15 +94,17 @@ const WHATSAPP_NUMBER = '5585986560309';
     const nome = (data.get('nome') || '').toString().trim();
     const whatsapp = (data.get('whatsapp') || '').toString().trim();
     const email = (data.get('email') || '').toString().trim();
+    const interesse = (data.get('interesse') || '').toString().trim();
 
-    if (!nome || !whatsapp || !email) {
+    if (!nome || !whatsapp || !email || !interesse) {
       errorEl?.classList.remove('hidden');
       return;
     }
     errorEl?.classList.add('hidden');
 
+    const acao = interesse === 'Alugar' ? 'alugar' : 'comprar';
     const message = encodeURIComponent(
-      `Olá! Meu nome é ${nome} e quero um orçamento na BravoLoc. Meu WhatsApp: ${whatsapp}. Meu e-mail: ${email}`
+      `Olá! Meu nome é ${nome} e quero um orçamento na BravoLoc para ${acao} uma tenda. Meu WhatsApp: ${whatsapp}. Meu e-mail: ${email}`
     );
 
     // This form opens wa.me via window.open() rather than a real <a> click, so it's invisible
@@ -99,11 +115,12 @@ const WHATSAPP_NUMBER = '5585986560309';
       event: 'generate_lead',
       form_id: 'quote-form',
       form_location: 'orcamento',
+      interesse,
     });
 
     // Grava o lead (nome, whatsapp, palavra-chave/gclid capturados na chegada) na planilha de
     // rastreio — ver Layout.astro. Fire-and-forget, não atrasa o redirecionamento abaixo.
-    window.sendBravoLocLead?.({ nome: nome, whatsapp: whatsapp, formulario: 'quote-form' });
+    window.sendBravoLocLead?.({ nome: nome, whatsapp: whatsapp, interesse: interesse, formulario: 'quote-form' });
 
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank', 'noopener');
   });
